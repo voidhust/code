@@ -3,8 +3,8 @@ public class ProduceConsumerOne {
 	static class Consumer implements Runnable{ 
 		@Override
 		public void run() { 
-			while(true){
-				try{
+			try{
+				while(true){
 					//加锁
 					synchronized(plate){
 						//当条件不满足时，继续wait
@@ -16,17 +16,18 @@ public class ProduceConsumerOne {
 						System.out.println("从盘子里拿一个苹果！"); 
 						plate.notifyAll();
 					} 
-				}catch (InterruptedException e) { 
-					return;
-				}
+				} 
+			}catch (InterruptedException e) { 
+				return;
 			}
+
 		}
 	}
 	static class Produce implements Runnable{ 
 		@Override
 		public void run() { 
-			while(true){
-				try {
+			try {
+				while(true){
 					//加锁
 					synchronized(plate){ 
 						while(plate.intValue()==1){
@@ -36,9 +37,9 @@ public class ProduceConsumerOne {
 						System.out.println("向盘子里放入一个苹果！"); 
 						plate.notifyAll();
 					}
-				} catch (InterruptedException e) { 
-					return;
 				}
+			} catch (InterruptedException e) { 
+				return;
 			}
 		} 
 	}
